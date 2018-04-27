@@ -119,19 +119,16 @@ def main():
 
 	#checkin for duplicates
 	for entry in entryList:
-		tempEntry = entry
-		#entryList.remove(entry)
-		tempSiteKey = tempEntry.sitekey
-		#print(tempSiteKey)
-		counter = 0
 		for otherEntry in entryList:
-			if(otherEntry.sitekey == tempSiteKey):
-				#print("we found a matching entry!")
-				#check for any attributes that are in one but not the other and add em
-				tempAttributes = otherEntry.attributes
-				for attribute in tempAttributes:
-					if attribute not in entry.attributes:
-						entry.attributes[attribute] = otherEntry.attributes[attribute]
+			if(otherEntry != entry):
+				if(otherEntry.sitekey == entry.sitekey):
+					#print("we found a matching entry!")
+					#check for any attributes that are in one but not the other and add em
+					for attribute in otherEntry.attributes:
+						if attribute not in entry.attributes:
+							entry.attributes[attribute] = otherEntry.attributes[attribute]
+					entryList.remove(otherEntry)
+
 
 	#load duplicate-free file into program and perform remaining content checks
 	for entry in entryList:
